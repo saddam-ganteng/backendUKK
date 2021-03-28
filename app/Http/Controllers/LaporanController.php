@@ -8,13 +8,14 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Masyarakat;
 use App\Models\Laporan;
 use App\Models\Kategori;
+use App\Models\Tanggapan;
 
 class LaporanController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function index()
     {
@@ -36,6 +37,42 @@ class LaporanController extends Controller
             'message' =>'List Semua laporan',
             'data'    => $laporan
         ], 200);
+    }
+
+    public function GET_lapor_ID($id)
+    {
+        $laporan = Laporan::find($id);
+
+        if ($laporan) {
+            return response()->json([
+                'code' => 200,
+                'message'   => 'Detail laporan!',
+                'data'      => $laporan
+            ], 200);
+        } else {
+            return response()->json([
+                'code' => 404,
+                'message' => 'laporan Tidak Ditemukan!',
+            ], 404);
+        }
+    }
+
+    public function GET_lapor_NIK($nik)
+    {
+        $laporan = Laporan::where('nik', $nik)->get();
+
+        if ($laporan) {
+            return response()->json([
+                'code' => 200,
+                'message'   => 'laporan!',
+                'data'      => $laporan
+            ], 200);
+        } else {
+            return response()->json([
+                'code' => 404,
+                'message' => 'Belum Membuat Laporan!',
+            ], 404);
+        }
     }
 
     public function POST_lapor(Request $request)
@@ -104,6 +141,59 @@ class LaporanController extends Controller
             ];
             return response()->json($out, $out['code']);
         }
+    }
+
+    public function GET_tanggapan($id_laporan)
+    {
+        $tanggapan = Tanggapan::where('id_laporan', $id_laporan)->get();
+
+        if ($tanggapan) {
+            return response()->json([
+                'code' => 200,
+                'message'   => 'tanggapan!',
+                'data'      => $tanggapan
+            ], 200);
+        } else {
+            return response()->json([
+                'code' => 404,
+                'message' => 'Belum Membuat tanggapan!',
+            ], 404);
+        }
+    }
+
+    public function POST_tanggapan(Request $request)
+    {
+        $this->validate($request, [
+            'id_laporan'   => 'required',
+            'tanggapan'   => 'required',
+            'id_petugas'   => 'required'
+        ]);
+ 
+        $id_laporan = $request->input("id_laporan");
+        $tgl_tanggapan = Carbon::now();
+        $tanggapan = $request->input("tanggapan");
+        $id_petugas = $request->input("id_petugas");
+ 
+        $data = [
+            "id_laporan" => $id_laporan,
+            "tgl_tanggapan" => $tgl_tanggapan->format('l, jS F Y'),
+            "tanggapan" => $tanggapan,
+            "id_petugas" => $id_petugas
+        ];
+
+        if (Tanggapan::create($data)) {
+            $out = [
+                "message" => "Tanggapan Berhasil!",
+                "code"    => 200,
+            ];
+        } else {
+            $out = [
+                "message" => "Tanggapan Gagal!",
+                "code"   => 404,
+            ];
+        }
+
+        return response()->json($out, $out['code']);
     }
 
     public function POST_kategori(Request $request)

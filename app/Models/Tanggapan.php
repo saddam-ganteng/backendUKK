@@ -8,15 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tanggapan extends Model
 {
-    // protected $primaryKey = 'nik';
+    protected $primaryKey = 'id_tanggapan';
 
-    // protected $fillable = [
-    //     'nama', 'username','password', 'telp', 'token'
-    // ];
+    protected $fillable = [
+        'id_laporan', 'tgl_tanggapan', 'tanggapan', 'id_petugas'
+    ];
 
-    // protected $hidden = [
-    //     'password',
-    // ];
     public function laparan()
     {
         return $this->belongsTo(Laporan::class);
