@@ -9,50 +9,53 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
-class MasyarakatController extends Controller
+class PetugasController extends Controller
 {
-    public function GET_masyarakat()
+    public function GET_petugas()
     {
-        $masyarakat = Masyarakat::all();
+        $masyarakat = Petugas::all();
 
         return response()->json([
             'success' => true,
-            'message' =>'List Semua Masyarakat',
+            'message' =>'List Semua Petugas',
             'data'    => $masyarakat
         ], 200);
     }
 
-    public function POST_masyarakat(Request $request)
+    public function POST_petugas(Request $request)
     {
         $this->validate($request, [
-            'nama'   => 'required',
-            'username' => 'required|unique:masyarakats|max:255',
-            'password' => 'required|min:6',
+            'nama_petugas'   => 'required|unique:petugass',
+            'username'   => 'required',
+            'password'   => 'required',
             'telp'   => 'required',
+            'level'   => 'required',
         ]);
  
-        $nama = $request->input("nama");
+        $nama_petugas = $request->input("nama_petugas");
         $username = $request->input("username");
         $password = $request->input("password");
         $telp = $request->input("telp");
- 
+        $level = $request->input("level");
+
         $hashPwd = Hash::make($password);
  
         $data = [
-            "nama" => $nama,
+            "nama_petugas" => $nama_petugas,
             "username" => $username,
             "password" => $hashPwd,
             "telp" => $telp,
+            "level" => $level
         ];
  
-        if (Masyarakat::create($data)) {
+        if (Petugas::create($data)) {
             $out = [
-                "message" => "Register Berhasil!",
-                "code"    => 201,
+                "message" => "Petugas Berhasil Ditambahkan!",
+                "code"    => 200,
             ];
         } else {
             $out = [
-                "message" => "Register Gagal!",
+                "message" => "Petugas Gagal! Ditambahkan",
                 "code"   => 404,
             ];
         }
@@ -60,50 +63,52 @@ class MasyarakatController extends Controller
         return response()->json($out, $out['code']);
     }
 
-    public function PUT_masyarakat(Request $request, $id)
+    public function PUT_petugas(Request $request, $id)
     {
-        $nama = $request->input("nama");
+        $nama_petugas = $request->input("nama_petugas");
         $password = $request->input("password");
         $telp = $request->input("telp");
+        $level = $request->input("level");
  
         $hashPwd = Hash::make($password);
  
         $data = [
-            "nama" => $nama,
+            "nama_petugas" => $nama_petugas,
             "password" => $hashPwd,
-            "telp" => $telp
+            "telp" => $telp,
+            "level" => $level,
         ];
 
-        $masyarakat = Masyarakat::where('nik', $id)->update($data);
+        $petugas = Petugas::where('id_petugas', $id)->update($data);
 
-        if ($masyarakat) {
+        if ($petugas) {
             return response()->json([
                 'code' => 200,
-                'message' => 'Masyarakat Berhasil Diupdate!',
-                'data' => $masyarakat
+                'message' => 'Petugas Berhasil Diupdate!',
+                'data' => $petugas
             ], 201);
         } else {
             return response()->json([
                 'code' => 400,
-                'message' => 'Masyarakat Gagal Diupdate!',
+                'message' => 'Petugas Gagal Diupdate!',
             ], 400);
         }
     }
 
-    public function DELETE_masyarakat($id)
+    public function DELETE_petugas($id)
     {
-        $masyarakat = Masyarakat::where('nik', $id)->first();
+        $petugas = Petugas::where('id_petugas', $id)->first();
 		
-        if (!$masyarakat) {
+        if (!$petugas) {
             $out = [
-                "message" => "masyarakat Gagal Dihapus!",
+                "message" => "Petugas Gagal Dihapus!",
                 "code"    => 401,
             ];
             return response()->json($out, $out['code']);
         } else {
-            $masyarakat->delete();
+            $petugas->delete();
             $out = [
-                "message" => "masyarakat Berhasil Dihapus!",
+                "message" => "Petugas Berhasil Dihapus!",
                 "code"    => 200,
             ];
             return response()->json($out, $out['code']);

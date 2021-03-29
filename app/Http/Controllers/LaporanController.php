@@ -12,10 +12,10 @@ use App\Models\Tanggapan;
 
 class LaporanController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     public function index()
     {
@@ -25,6 +25,72 @@ class LaporanController extends Controller
             'code' => 200,
             'message' =>'List Semua Masyarakat',
             'data'    => $masyarakat
+        ], 200);
+    }
+
+    public function GET_JAKARTA_LAPOR()
+    {
+        $count = Laporan::where('provinsi', 'Dki Jakarta')->count();
+
+        return response()->json([
+            'code' => 200,
+            'message' =>'List Semua laporan asdanskdjnasdk',
+            'data'    => $count
+        ], 200);
+    }
+
+    public function GET_ACEH_LAPOR()
+    {
+        $count = Laporan::where('provinsi', 'Aceh')->count();
+
+        return response()->json([
+            'code' => 200,
+            'message' =>'List Semua laporan asdanskdjnasdk',
+            'data'    => $count
+        ], 200);
+    }
+
+    public function GET_SULAWESI_LAPOR()
+    {
+        $count = Laporan::where('provinsi', 'Sulawesi Selatan')->count();
+
+        return response()->json([
+            'code' => 200,
+            'message' =>'List Semua laporan asdanskdjnasdk',
+            'data'    => $count
+        ], 200);
+    }
+
+    public function GET_PAPUA_LAPOR()
+    {
+        $count = Laporan::where('provinsi', 'Papua')->count();
+
+        return response()->json([
+            'code' => 200,
+            'message' =>'List Semua laporan asdanskdjnasdk',
+            'data'    => $count
+        ], 200);
+    }
+
+    public function GET_BALI_LAPOR()
+    {
+        $count = Laporan::where('provinsi', 'Bali')->count();
+
+        return response()->json([
+            'code' => 200,
+            'message' =>'List Semua laporan asdanskdjnasdk',
+            'data'    => $count
+        ], 200);
+    }
+
+    public function GET_YOGYAKARTA_LAPOR()
+    {
+        $count = Laporan::where('provinsi', 'Di Yogyakarta')->count();
+
+        return response()->json([
+            'code' => 200,
+            'message' =>'List Semua laporan asdanskdjnasdk',
+            'data'    => $count
         ], 200);
     }
 
@@ -143,6 +209,28 @@ class LaporanController extends Controller
         }
     }
 
+    public function DONE_lapor($id)
+    {
+        $laporan = Laporan::where('id_laporan', $id)->first();
+		
+        if (!$laporan) {
+            $out = [
+                "message" => "laporan Gagal DiUpdate!",
+                "code"    => 401,
+            ];
+            return response()->json($out, $out['code']);
+        } else {
+            $laporan->update([
+                'status' => "selesai"
+            ]);
+            $out = [
+                "message" => "laporan Berhasil Dihapus!",
+                "code"    => 200,
+            ];
+            return response()->json($out, $out['code']);
+        }
+    }
+
     public function GET_tanggapan($id_laporan)
     {
         $tanggapan = Tanggapan::where('id_laporan', $id_laporan)->get();
@@ -166,19 +254,22 @@ class LaporanController extends Controller
         $this->validate($request, [
             'id_laporan'   => 'required',
             'tanggapan'   => 'required',
-            'id_petugas'   => 'required'
+            'id_petugas'   => 'required',
+            'nama_petugas'   => 'required'
         ]);
  
         $id_laporan = $request->input("id_laporan");
         $tgl_tanggapan = Carbon::now();
         $tanggapan = $request->input("tanggapan");
         $id_petugas = $request->input("id_petugas");
+        $nama_petugas = $request->input("nama_petugas");
  
         $data = [
             "id_laporan" => $id_laporan,
             "tgl_tanggapan" => $tgl_tanggapan->format('l, jS F Y'),
             "tanggapan" => $tanggapan,
-            "id_petugas" => $id_petugas
+            "id_petugas" => $id_petugas,
+            "nama_petugas" => "asdasd",
         ];
 
         if (Tanggapan::create($data)) {

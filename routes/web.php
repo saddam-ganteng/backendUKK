@@ -23,13 +23,15 @@ $router->post('/api/login/masyarakat', 'AuthController@login_masyarakat');
 $router->post('/api/register/petugas', 'AuthController@register_petugas');
 $router->post('/api/login/petugas', 'AuthController@login_petugas');
 
-$router->get('/api/get/rakyat', 'LaporanController@index');
+
+$router->get('/api/get/row', 'LaporanController@GET_SUM_LAPOR');
 
 $router->get('/api/lapor', 'LaporanController@GET_lapor');
 $router->get('/api/lapor/id/{id}', 'LaporanController@GET_lapor_ID');
 $router->get('/api/lapor/nik/{nik}', 'LaporanController@GET_lapor_NIK');
 $router->post('/api/lapor', 'LaporanController@POST_lapor');
 $router->delete('/api/lapor/{id}', 'LaporanController@DELETE_lapor');
+$router->put('/api/lapor/{id}/selesai', 'LaporanController@DONE_lapor');
 
 $router->get('/api/lapor/{id_laporan}/tanggapan', 'LaporanController@GET_tanggapan');
 $router->post('/api/lapor/tanggapan', 'LaporanController@POST_tanggapan');
@@ -40,3 +42,12 @@ $router->post('/api/kategori', 'LaporanController@POST_kategori');
 $router->put('/api/kategori/{id}', 'LaporanController@PUT_kategori');
 $router->delete('/api/kategori/{id}', 'LaporanController@DELETE_kategori');
 
+$router->get('/api/get/petugas', 'PetugasController@GET_petugas');
+$router->post('/api/post/petugas', 'PetugasController@POST_petugas');
+$router->put('/api/petugas/{id}', 'PetugasController@PUT_petugas');
+$router->delete('/api/petugas/{id}', 'PetugasController@DELETE_petugas');
+
+$router->get('/api/get/rakyat', 'MasyarakatController@GET_masyarakat');
+$router->post('/api/post/rakyat', 'MasyarakatController@POST_masyarakat');
+$router->put('/api/rakyat/{id}', 'MasyarakatController@PUT_masyarakat');
+$router->delete('/api/rakyat/{id}', 'MasyarakatController@DELETE_masyarakat');
