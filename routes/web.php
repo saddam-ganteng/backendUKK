@@ -23,8 +23,12 @@ $router->post('/api/login/masyarakat', 'AuthController@login_masyarakat');
 $router->post('/api/register/petugas', 'AuthController@register_petugas');
 $router->post('/api/login/petugas', 'AuthController@login_petugas');
 
-
-$router->get('/api/get/row', 'LaporanController@GET_SUM_LAPOR');
+$router->get('/api/get/laporan/jakarta', 'LaporanController@GET_JAKARTA_LAPOR');
+$router->get('/api/get/laporan/bali', 'LaporanController@GET_BALI_LAPOR');
+$router->get('/api/get/laporan/aceh', 'LaporanController@GET_ACEH_LAPOR');
+$router->get('/api/get/laporan/yogyakarta', 'LaporanController@GET_YOGYAKARTA_LAPOR');
+$router->get('/api/get/laporan/papua', 'LaporanController@GET_PAPUA_LAPOR');
+$router->get('/api/get/laporan/sulawesi', 'LaporanController@GET_SULAWESI_LAPOR');
 
 $router->get('/api/lapor', 'LaporanController@GET_lapor');
 $router->get('/api/lapor/id/{id}', 'LaporanController@GET_lapor_ID');

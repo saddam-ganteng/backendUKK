@@ -34,7 +34,7 @@ class LaporanController extends Controller
 
         return response()->json([
             'code' => 200,
-            'message' =>'List Semua laporan asdanskdjnasdk',
+            'message' =>'List Semua laporan DKI Jakarta',
             'data'    => $count
         ], 200);
     }
@@ -45,7 +45,7 @@ class LaporanController extends Controller
 
         return response()->json([
             'code' => 200,
-            'message' =>'List Semua laporan asdanskdjnasdk',
+            'message' =>'List Semua laporan di Bali',
             'data'    => $count
         ], 200);
     }
@@ -56,7 +56,7 @@ class LaporanController extends Controller
 
         return response()->json([
             'code' => 200,
-            'message' =>'List Semua laporan asdanskdjnasdk',
+            'message' =>'List Semua laporan Sulawesi',
             'data'    => $count
         ], 200);
     }
@@ -67,7 +67,7 @@ class LaporanController extends Controller
 
         return response()->json([
             'code' => 200,
-            'message' =>'List Semua laporan asdanskdjnasdk',
+            'message' =>'List Semua laporan Papua',
             'data'    => $count
         ], 200);
     }
@@ -78,7 +78,7 @@ class LaporanController extends Controller
 
         return response()->json([
             'code' => 200,
-            'message' =>'List Semua laporan asdanskdjnasdk',
+            'message' =>'List Semua laporan Bali',
             'data'    => $count
         ], 200);
     }
@@ -89,7 +89,7 @@ class LaporanController extends Controller
 
         return response()->json([
             'code' => 200,
-            'message' =>'List Semua laporan asdanskdjnasdk',
+            'message' =>'List Semua laporan DI Yogyakarta',
             'data'    => $count
         ], 200);
     }
