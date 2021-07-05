@@ -161,7 +161,14 @@ class LaporanController extends Controller
         $kecamatan = $request->input("kecamatan");
         $isi_laporan = $request->input("isi_laporan");
         $tanggal = Carbon::now();
- 
+
+        // if($request->hasFile('image')) {
+            // $image = $request->file('image');
+            // $name = $image->getClientOriginalName();
+            // $destinationPath = storage_path('images');
+            // $image->move($destinationPath, $name);
+        // }
+        
         $data = [
             "tgl_laporan" => $tanggal->format('l, jS F Y'),
             "nik" => $nik,
@@ -171,7 +178,7 @@ class LaporanController extends Controller
             "kota" => $kota,
             "kecamatan" => $kecamatan,
             "isi_laporan" => $isi_laporan,
-            "foto" => $isi_laporan
+            "image" => $isi_laporan
         ];
  
         if (Laporan::create($data)) {
@@ -269,7 +276,7 @@ class LaporanController extends Controller
             "tgl_tanggapan" => $tgl_tanggapan->format('l, jS F Y'),
             "tanggapan" => $tanggapan,
             "id_petugas" => $id_petugas,
-            "nama_petugas" => "asdasd",
+            "nama_petugas" => $nama_petugas,
         ];
 
         if (Tanggapan::create($data)) {

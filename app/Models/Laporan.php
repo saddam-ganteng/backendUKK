@@ -11,7 +11,7 @@ class Laporan extends Model
     protected $primaryKey = 'id_laporan';
 
     protected $fillable = [
-       'tgl_laporan', 'nik', 'judul', 'isi_laporan', 'kategori', 'provinsi', 'kota', 'kecamatan', 'foto', 'status'
+       'tgl_laporan', 'nik', 'judul', 'isi_laporan', 'kategori', 'provinsi', 'kota', 'kecamatan', 'image', 'status'
     ];
 
     // protected $hidden = [

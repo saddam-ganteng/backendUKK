@@ -13,10 +13,10 @@ class Petugas extends Model
     protected $primaryKey = 'id_petugas';
 
     protected $fillable = [
-        'nama_petugas', 'username', 'password', 'telp', 'token' , 'level'
+        'nama_petugas', 'username', 'password', 'token', 'telp', 'level'
     ];
 
-    // protected $hidden = [
-    //     'password',
-    // ];
+    protected $hidden = [
+        'created_at', 'updated_at',
+    ];
 }

@@ -13,13 +13,31 @@ class PetugasController extends Controller
 {
     public function GET_petugas()
     {
-        $masyarakat = Petugas::all();
+        $petugas = Petugas::all();
 
         return response()->json([
             'success' => true,
             'message' =>'List Semua Petugas',
-            'data'    => $masyarakat
+            'data'    => $petugas
         ], 200);
+    }
+
+    public function GET_petugas_ID($token)
+    {
+        $petugas = Petugas::where('token', $token)->first();
+
+        if ($petugas) {
+            return response()->json([
+                'code' => 200,
+                'message'   => 'petugas',
+                'data'      => $petugas
+            ], 200);
+        } else {
+            return response()->json([
+                'code' => 404,
+                'message' => 'tidak ada petugas dengan id tersebut!',
+            ], 404);
+        }
     }
 
     public function POST_petugas(Request $request)
@@ -63,7 +81,7 @@ class PetugasController extends Controller
         return response()->json($out, $out['code']);
     }
 
-    public function PUT_petugas(Request $request, $id)
+    public function PUT_petugas(Request $request, $token)
     {
         $nama_petugas = $request->input("nama_petugas");
         $password = $request->input("password");
@@ -79,7 +97,7 @@ class PetugasController extends Controller
             "level" => $level,
         ];
 
-        $petugas = Petugas::where('id_petugas', $id)->update($data);
+        $petugas = Petugas::where('token', $token)->update($data);
 
         if ($petugas) {
             return response()->json([
@@ -112,6 +130,64 @@ class PetugasController extends Controller
                 "code"    => 200,
             ];
             return response()->json($out, $out['code']);
+        }
+    }
+
+    public function UPDATE_foto_petugas(Request $request, $id)
+    {
+        $this->validate($request, [
+            'foto'   => 'required|image'
+        ]);
+ 
+        $foto = $request->file("foto");
+ 
+        $data = [
+            "foto" => $foto
+        ];
+
+        $petugas = Petugas::where('id_petugas', $id)->update($data);
+
+        if ($petugas) {
+            return response()->json([
+                'code' => 200,
+                'message' => 'Foto Petugas Berhasil Diupdate!',
+                'data' => $data
+            ], 200);
+        } else {
+            return response()->json([
+                'code' => 400,
+                'message' => 'Foto Petugas Gagal Diupdate!',
+            ], 400);
+        }
+    }
+
+    public function UPDATE_foto(Request $request, $token)
+    {
+        $id_petugas = Petugas::where('token', $token)->value('id_petugas');
+        
+        $image = $request->file('image');
+        $name = $image->getClientOriginalName();
+        $uniq = "avatar_".$id_petugas."_".$name;
+        $destinationPath = public_path('assets/images');
+        $image->move($destinationPath, $uniq);
+
+        $data = [
+            "image" => $uniq
+        ];
+
+        $petugas = Petugas::where('token', $token)->update($data);
+
+        if ($petugas) {
+            return response()->json([
+                'code' => 200,
+                'message' => 'Foto Petugas Berhasil Diupdate!',
+                'data' => $data
+            ], 200);
+        } else {
+            return response()->json([
+                'code' => 400,
+                'message' => 'Foto Petugas Gagal Diupdate!',
+            ], 400);
         }
     }
 

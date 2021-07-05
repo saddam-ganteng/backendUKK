@@ -47,9 +47,11 @@ $router->put('/api/kategori/{id}', 'LaporanController@PUT_kategori');
 $router->delete('/api/kategori/{id}', 'LaporanController@DELETE_kategori');
 
 $router->get('/api/get/petugas', 'PetugasController@GET_petugas');
+$router->get('/api/get/petugas/{token}', 'PetugasController@GET_petugas_ID');
 $router->post('/api/post/petugas', 'PetugasController@POST_petugas');
-$router->put('/api/petugas/{id}', 'PetugasController@PUT_petugas');
+$router->put('/api/petugas/{token}', 'PetugasController@PUT_petugas');
 $router->delete('/api/petugas/{id}', 'PetugasController@DELETE_petugas');
+$router->post('/api/petugas/foto/{token}', 'PetugasController@UPDATE_foto');
 
 $router->get('/api/get/rakyat', 'MasyarakatController@GET_masyarakat');
 $router->post('/api/post/rakyat', 'MasyarakatController@POST_masyarakat');

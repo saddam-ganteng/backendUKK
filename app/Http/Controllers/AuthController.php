@@ -142,12 +142,11 @@ class AuthController extends Controller
         $password = $request->input("password");
  
         $petugas = Petugas::where("username", $username)->first();
-        $masyarakat = Masyarakat::where("username", $username)->first();
  
-        if (!$petugas && !$masyarakat) {
+        if (!$petugas) {
             $out = [
-                "message" => "Login asdGagal, coba cek username dan password lagi!",
-                "code"    => 401,
+                "message" => "Login Gagal, coba cek username dan password lagi!",
+                "code"    => 404,
             ];
             return response()->json($out, $out['code']);
         }
@@ -162,30 +161,12 @@ class AuthController extends Controller
                 $out = [
                     "message" => "Login Berhasil! ",
                     "code"    => 200,
-                    'data'    => $petugas
+                    'data'    => $petugas['token']
                 ];
             } else {
                 $out = [
                     "message" => "Login Gagal, coba cek username dan passasdword lagi!",
-                    "code"    => 401,
-                ];
-            }
-        } elseif ($masyarakat) {
-            if (Hash::check($password, $masyarakat->password)) {
-                $generateToken = bin2hex(random_bytes(40));
-                $masyarakat->update([
-                    'token' => $generateToken
-                ]);
-
-                $out = [
-                    "message" => "Login Berhasil! ",
-                    "code"    => 200,
-                    'data'    => $masyarakat
-                ];
-            } else {
-                $out = [
-                    "message" => "Login Gagal, coba cek username dan password lagasdi!",
-                    "code"    => 401,
+                    "code"    => 404,
                 ];
             }
         }
